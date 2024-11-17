@@ -19,10 +19,10 @@
         <div class="position-absolute bottom-0 ps-2 pb-1">
           <div>{{item.title}}</div>
           <i [ngClass]="item.likes?.includes(userDetails._id)? 'bi bi-heart-fill text-danger me-4':'bi bi-heart me-4'"
-          (click)="likePost(item._id)"><span class="text-white">
-            {{item.likes?.length ? item.likes.length:0}}</span></i>
-        <i class="bi bi-chat" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-          aria-controls="offcanvasExample" (click)="setItemID(item._id)"> {{item.commentsCount}}</i>
+            (click)="likePost(item._id)"><span class="text-white">
+              {{item.likes?.length ? item.likes.length:0}}</span></i>
+          <i class="bi bi-chat" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+            aria-controls="offcanvasExample" (click)="setItemID(item._id)"> {{item.commentsCount}}</i>
         </div>
 
         <div class="position-absolute bottom-0 end-0 pe-2 pb-1">
@@ -47,7 +47,7 @@
         <i type="button text-white" class=" bi bi-x-lg" data-bs-dismiss="modal" aria-label="Close"></i>
       </div>
       <div class="modal-body">
-        <img [src]="'http://localhost:5000/uploads/'+ viewInModal?.displayImg" class="img-fluid" alt="text"
+        <img [src]="serverUrl+'/uploads/'+ viewInModal?.displayImg" class="img-fluid" alt="text"
           style="width: 100%; height: 100%;">
       </div>
     </div>

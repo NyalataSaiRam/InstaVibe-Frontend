@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from '../../core/services/post.service';
-import { environment } from '../../../environments/environment.development';
+// import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
 import { CommentsService } from '../../core/services/comments.service';
@@ -32,8 +33,8 @@ export class ViewProfileComponent implements OnInit {
   serverUrl: string = environment.DEV_SERVER
   userDetails!: any;
   viewInModal: any;
-  followers!:any;
-  following!:any;
+  followers!: any;
+  following!: any;
   priofileUserDetails!: any;
 
 
@@ -82,51 +83,51 @@ export class ViewProfileComponent implements OnInit {
   }
 
 
-followAndUnfollowUser(){
-  if(this.userDetails.following.includes(this.priofileUserDetails._id)){
-    this.postService.unfollowUser(this.priofileUserDetails._id).subscribe({
+  followAndUnfollowUser() {
+    if (this.userDetails.following.includes(this.priofileUserDetails._id)) {
+      this.postService.unfollowUser(this.priofileUserDetails._id).subscribe({
+        next: (result: any) => {
+          this.userDetails = result.me
+          this.priofileUserDetails = result.other
+        },
+        error: (error) => {
+          console.error('Error unfollowing user:', error);
+        }
+      })
+    } else {
+      this.postService.followUser(this.priofileUserDetails._id).subscribe({
+        next: (result: any) => {
+          this.userDetails = result.me
+          this.priofileUserDetails = result.other
+        },
+        error: (error) => {
+          console.error('Error following user:', error);
+        }
+      })
+    }
+  }
+
+  getFollowers() {
+    this.postService.getFollower(this.priofileUserDetails._id).subscribe({
       next: (result: any) => {
-        this.userDetails = result.me
-        this.priofileUserDetails = result.other
+        this.followers = result.followers;
       },
-      error: (error) => {
-        console.error('Error unfollowing user:', error);
-      }
-    })
-  }else{
-    this.postService.followUser(this.priofileUserDetails._id).subscribe({
-      next: (result: any) => {
-        this.userDetails = result.me
-        this.priofileUserDetails = result.other
-      },
-      error: (error) => {
-        console.error('Error following user:', error);
+      error: (err) => {
+        console.log(err)
       }
     })
   }
-}
 
-getFollowers(){
-  this.postService.getFollower(this.priofileUserDetails._id).subscribe({
-    next: (result:any) => {
-      this.followers = result.followers;
-    },
-    error: (err) => {
-      console.log(err)
-    }
-   })
-}
-
-getFollowing(){
-   this.postService.getFollowing(this.priofileUserDetails._id).subscribe({
-    next: (result:any) => {
-      this.following = result.following;
-    },
-    error: (err) => {
-      console.log(err)
-    }
-   })
-}
+  getFollowing() {
+    this.postService.getFollowing(this.priofileUserDetails._id).subscribe({
+      next: (result: any) => {
+        this.following = result.following;
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
+  }
 
 
   ngOnInit(): void {
@@ -134,11 +135,11 @@ getFollowing(){
     this.authService.getUserDetails().subscribe(val => {
       this.userDetails = val
 
-     
+
       this.activatedRoute.paramMap.subscribe(params => {
         const id = params.get('id')
         if (id && id !== this.userDetails._id) {
-  
+
           this.postService.getProfilePosts(id).subscribe({
             next: (posts: any) => {
               this.items = posts.updated_posts
@@ -156,7 +157,7 @@ getFollowing(){
         }
       })
     })
-   
+
   }
 
 }

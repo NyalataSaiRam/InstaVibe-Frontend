@@ -1,7 +1,8 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of, tap, throwError } from 'rxjs';
-import { environment } from '../../../environments/environment.development';
+// import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -163,7 +164,7 @@ export class PostService {
       'Authorization': `Bearer ${token}`
     })
 
-    return this.httpClient.get(`${this.serverUrl}/user/followers/${id}`, {headers})
+    return this.httpClient.get(`${this.serverUrl}/user/followers/${id}`, { headers })
   }
 
   getFollowing(id: string) {
@@ -173,34 +174,34 @@ export class PostService {
       'Authorization': `Bearer ${token}`
     })
 
-    return this.httpClient.get(`${this.serverUrl}/user/following/${id}`, {headers})
+    return this.httpClient.get(`${this.serverUrl}/user/following/${id}`, { headers })
   }
 
-  removeFollowingUser(id:string){
+  removeFollowingUser(id: string) {
     let token = sessionStorage.getItem('token')
 
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this.httpClient.delete(`${this.serverUrl}/user/following/${id}`, {headers})
+    return this.httpClient.delete(`${this.serverUrl}/user/following/${id}`, { headers })
   }
 
-  removeFollowerUser(id:string){
+  removeFollowerUser(id: string) {
     let token = sessionStorage.getItem('token')
 
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this.httpClient.delete(`${this.serverUrl}/user/followers/${id}`, {headers})
+    return this.httpClient.delete(`${this.serverUrl}/user/followers/${id}`, { headers })
   }
 
-  recentPostsFromFollowing(){
+  recentPostsFromFollowing() {
     let token = sessionStorage.getItem('token')
 
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this.httpClient.get(`${this.serverUrl}/post/getRecentPostsFromFollowing`, {headers})
+    return this.httpClient.get(`${this.serverUrl}/post/getRecentPostsFromFollowing`, { headers })
   }
 
 

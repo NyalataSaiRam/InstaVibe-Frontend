@@ -4,7 +4,8 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { itemsList } from '../../shared/utils/itemsList';
 import { CommentsComponent } from '../comments/comments/comments.component';
 import { PostService } from '../../core/services/post.service';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
+// import { environment } from '../../../environments/environment.development';
 import { AuthService } from '../../core/services/auth.service';
 import { CommentsService } from '../../core/services/comments.service';
 
@@ -93,7 +94,7 @@ export class MySavedPostsComponent implements OnInit {
     this.getSavedPosts()
     this.authService.getUserDetails().subscribe(val => {
       this.userDetails = val
-     
+
 
     })
   }

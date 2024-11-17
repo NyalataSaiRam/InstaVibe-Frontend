@@ -1,10 +1,9 @@
 <div class="container">
   <div class="row p-3 border-bottom bg-dark rounded-4" style="display: flex; flex-direction: row;">
     <div class="w-25 d-flex justify-content-center align-items-center">
-      <img [src]="'http://localhost:5000/uploads/'+userDetails?.profilePic " alt=""
+      <img [src]="serverUrl+'/uploads/'+userDetails?.profilePic " alt=""
         style="border-radius: 100%; aspect-ratio: 1; width: 100%; object-fit: cover; max-width: 200px; max-height: 200px; background: linear-gradient(to right, darkblue, darkorchid); padding: 5px; ">
-      <!-- <img [src]="'http://localhost:5000/uploads/'+userDetails.profilePic" alt="profilePic"
-       > -->
+
     </div>
     <div class="w-75">
       <h1 class=" text-center text-md-start text-capitalize">{{userDetails?.username}}</h1>
@@ -19,8 +18,8 @@
 
 
         <div class="col-4 text-center">
-          <a id="followersBtn" (click)="getFollowers()"  data-bs-toggle="offcanvas" data-bs-target="#followersOffCanvas" aria-controls="offcanvasRight"
-            style="display: inline-block; color: inherit; text-decoration: none;">
+          <a id="followersBtn" (click)="getFollowers()" data-bs-toggle="offcanvas" data-bs-target="#followersOffCanvas"
+            aria-controls="offcanvasRight" style="display: inline-block; color: inherit; text-decoration: none;">
             <div class="d-flex flex-column">
               <span>{{userDetails?.followers.length}}</span>
               <span>followers</span>
@@ -28,7 +27,8 @@
           </a>
         </div>
         <div class="col-4 text-center">
-          <a id="followingBtn" (click)="getFollowing()" data-bs-toggle="offcanvas" data-bs-target="#followingOffCanvas" aria-controls="offcanvasRight" style="display: inline-block; color: inherit; text-decoration: none;">
+          <a id="followingBtn" (click)="getFollowing()" data-bs-toggle="offcanvas" data-bs-target="#followingOffCanvas"
+            aria-controls="offcanvasRight" style="display: inline-block; color: inherit; text-decoration: none;">
             <div class="d-flex flex-column">
               <span>{{userDetails?.following.length}}</span>
               <span>following</span>
@@ -143,21 +143,22 @@
     <div class="offcanvas-body">
       @if(followers?.length){
 
-        @for (item of followers; track $index) {
-          <div class="d-flex col-12 ">
-            <div class="col-2">
-              <img [src]="serverUrl+'/uploads/'+item.profilePic" style="object-fit: cover; aspect-ratio: 1; border-radius: 100%; width: 50px;" alt=""
-                class="image-fluid">
-            </div>
-            <div class="col-7 text-start d-flex flex-column justify-content-center mt-1 " style="line-height: 10px;">
-              <p>{{item.username}}</p>
-              <p class="text-secondary">{{item.email}}</p>
-            </div>
-            <div class="col-3"><button (click)="removeFollowerUser(item._id)" class="btn btn-outline-primary mt-1 btn-group-sm">remove</button></div>
-          </div>
-        }
+      @for (item of followers; track $index) {
+      <div class="d-flex col-12 ">
+        <div class="col-2">
+          <img [src]="serverUrl+'/uploads/'+item.profilePic"
+            style="object-fit: cover; aspect-ratio: 1; border-radius: 100%; width: 50px;" alt="" class="image-fluid">
+        </div>
+        <div class="col-7 text-start d-flex flex-column justify-content-center mt-1 " style="line-height: 10px;">
+          <p>{{item.username}}</p>
+          <p class="text-secondary">{{item.email}}</p>
+        </div>
+        <div class="col-3"><button (click)="removeFollowerUser(item._id)"
+            class="btn btn-outline-primary mt-1 btn-group-sm">remove</button></div>
+      </div>
+      }
       }@else {
-        <p class="text-center fs-4">No one is following you</p>
+      <p class="text-center fs-4">No one is following you</p>
       }
     </div>
   </div>
@@ -174,21 +175,22 @@
     <div class="offcanvas-body">
       @if(following?.length){
 
-        @for (item of following; track $index) {
-          <div class="d-flex col-12 ">
-            <div class="col-2">
-              <img [src]="serverUrl+'/uploads/'+item.profilePic" style="object-fit: cover; aspect-ratio: 1; border-radius: 100%; width: 50px;" alt=""
-                class="image-fluid">
-            </div>
-            <div class="col-7 text-start d-flex flex-column justify-content-center mt-1 " style="line-height: 10px;">
-              <p>{{item.username}}</p>
-              <p class="text-secondary">{{item.email}}</p>
-            </div>
-            <div class="col-3"><button (click)="removeFollowingUser(item._id)" class="btn btn-outline-primary mt-1 btn-group-sm">remove</button></div>
-          </div>
-        }
+      @for (item of following; track $index) {
+      <div class="d-flex col-12 ">
+        <div class="col-2">
+          <img [src]="serverUrl+'/uploads/'+item.profilePic"
+            style="object-fit: cover; aspect-ratio: 1; border-radius: 100%; width: 50px;" alt="" class="image-fluid">
+        </div>
+        <div class="col-7 text-start d-flex flex-column justify-content-center mt-1 " style="line-height: 10px;">
+          <p>{{item.username}}</p>
+          <p class="text-secondary">{{item.email}}</p>
+        </div>
+        <div class="col-3"><button (click)="removeFollowingUser(item._id)"
+            class="btn btn-outline-primary mt-1 btn-group-sm">remove</button></div>
+      </div>
+      }
       }@else {
-        <p class="text-center fs-4">You are not following anyone</p>
+      <p class="text-center fs-4">You are not following anyone</p>
       }
     </div>
   </div>

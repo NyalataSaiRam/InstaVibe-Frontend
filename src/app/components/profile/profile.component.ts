@@ -5,13 +5,14 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { PostService } from '../../core/services/post.service';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
+// import { environment } from '../../../environments/environment.development';
 
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [  RouterOutlet, RouterLink, RouterLinkActive, CommonModule, ReactiveFormsModule ],
+  imports: [ RouterOutlet, RouterLink, RouterLinkActive, CommonModule, ReactiveFormsModule ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -21,11 +22,11 @@ export class ProfileComponent implements OnInit {
   file = new FormData()
   userDetails!: any;
   updateSuccessful: boolean = false;
-  followers!:any;
-  following!:any;
-  serverUrl:string = environment.DEV_SERVER
+  followers!: any;
+  following!: any;
+  serverUrl: string = environment.DEV_SERVER
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private postService:PostService) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private postService: PostService) {
     this.profileForm = this.formBuilder.group({
       username: [ this.userDetails?.username, [ Validators.required, Validators.minLength(3) ] ],
       description: [ this.userDetails?.description, [ Validators.required, Validators.minLength(3) ] ],
@@ -49,29 +50,29 @@ export class ProfileComponent implements OnInit {
     })
   }
 
-  getFollowers(){
+  getFollowers() {
     this.postService.getFollower(this.userDetails._id).subscribe({
-      next: (result:any) => {
+      next: (result: any) => {
         this.followers = result.followers;
       },
       error: (err) => {
         console.log(err)
       }
-     })
+    })
   }
 
-  getFollowing(){
-     this.postService.getFollowing(this.userDetails._id).subscribe({
-      next: (result:any) => {
+  getFollowing() {
+    this.postService.getFollowing(this.userDetails._id).subscribe({
+      next: (result: any) => {
         this.following = result.following;
       },
       error: (err) => {
         console.log(err)
       }
-     })
+    })
   }
 
-  removeFollowingUser(id:string){
+  removeFollowingUser(id: string) {
     this.postService.removeFollowingUser(id).subscribe({
       next: (result) => {
         this.userDetails = result
@@ -80,11 +81,11 @@ export class ProfileComponent implements OnInit {
     })
   }
 
-  removeFollowerUser(id:string){
+  removeFollowerUser(id: string) {
     // console.log(id)
-    
+
     this.postService.removeFollowerUser(id).subscribe({
-      next: (result:any) => {
+      next: (result: any) => {
         this.userDetails = result.me
         this.getFollowers()
       }

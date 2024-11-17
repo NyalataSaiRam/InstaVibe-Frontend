@@ -5,7 +5,8 @@ import { Constants } from '../../../core/constants/constants';
 import { CommonModule, DatePipe } from '@angular/common';
 import { CommentFormComponent } from '../comment-form/comment-form.component';
 import { CommentsService } from '../../../core/services/comments.service';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
+// import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-comments',
@@ -14,8 +15,8 @@ import { environment } from '../../../../environments/environment.development';
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.css'
 })
-export class CommentsComponent  {
- 
+export class CommentsComponent {
+
   itemId!: string;
   showReplies: boolean = false
   showReplyForm: boolean = false
@@ -23,13 +24,14 @@ export class CommentsComponent  {
   // activeUser!: itemsListModal;
   logo = Constants.logo
   loading: boolean = false
-  rloading:boolean = false
+  rloading: boolean = false
 
   commentsList!: any[];
   repliesList!: any[];
   commentId!: number;
   replyParentId!: number | null;
   serverUrl = environment.DEV_SERVER
+  // serverUrl = environment.DEV_SERVER
   @Output() commentsUpdated = new EventEmitter()
 
   constructor(
@@ -46,7 +48,7 @@ export class CommentsComponent  {
   }
 
   getComments() {
-   
+
     this.loading = true
     if (this.itemId) {
 
@@ -61,7 +63,7 @@ export class CommentsComponent  {
     this.showReplies = true
     this.rloading = true
     this.repliesList = []
-   
+
 
     this.commentService.getComments(this.itemId).subscribe(comments => {
       this.repliesList = comments.filter((c: any) => c.parentId === id)
@@ -79,19 +81,19 @@ export class CommentsComponent  {
       postId: this.itemId
     }
 
-    if(newComment.parentId === null){
+    if (newComment.parentId === null) {
 
       this.commentService.addComments(newComment).subscribe(k => {
         this.getComments()
         this.commentsUpdated.emit(this.itemId)
       })
-    }else{
+    } else {
       this.commentService.addComments(newComment).subscribe(k => {
-        
+
         this.showReplyForm = false
         this.getReplies(newComment.parentId)
         this.commentsUpdated.emit(this.itemId)
-       
+
       })
 
     }
@@ -105,5 +107,5 @@ export class CommentsComponent  {
     this.replyParentId = this.showReplyForm ? parentId : null;
   }
 
- 
+
 }

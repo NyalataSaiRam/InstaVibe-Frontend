@@ -5,9 +5,10 @@ import { BlurImageDirective } from '../../shared/directives/blur-image.directive
 import { CommentsComponent } from '../comments/comments/comments.component';
 import { PostService } from '../../core/services/post.service';
 import { AuthService } from '../../core/services/auth.service';
-import { environment } from '../../../environments/environment.development';
+// import { environment } from '../../../environments/environment.development';
 import { CommentsService } from '../../core/services/comments.service';
 import { RouterLink } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',

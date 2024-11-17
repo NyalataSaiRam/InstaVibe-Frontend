@@ -6,8 +6,9 @@ import { CommentsComponent } from '../comments/comments/comments.component';
 import { PostService } from '../../core/services/post.service';
 import { AuthService } from '../../core/services/auth.service';
 import { BehaviorSubject } from 'rxjs';
-import { environment } from '../../../environments/environment.development';
+// import { environment } from '../../../environments/environment.development';
 import { CommentsService } from '../../core/services/comments.service';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class MyPostsComponent implements OnInit {
   items: any[] = []
   itemId!: string;
   serverUrl = environment.DEV_SERVER
+  // serverUrl = environment.DEV_SERVER
   isLoading: boolean = false
   userDetails!: any;
 

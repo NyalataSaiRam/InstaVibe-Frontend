@@ -3,7 +3,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommentsComponent } from '../comments/comments/comments.component';
 import { PostService } from '../../core/services/post.service';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
+// import { environment } from '../../../environments/environment.development';
 import { CommentsService } from '../../core/services/comments.service';
 import { AuthService } from '../../core/services/auth.service';
 

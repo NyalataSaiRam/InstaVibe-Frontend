@@ -58,7 +58,7 @@
           <i type="button text-white" class=" bi bi-x-lg" data-bs-dismiss="modal" aria-label="Close"></i>
         </div>
         <div class="modal-body">
-          <img [src]="'http://localhost:5000/uploads/'+ viewInModal?.displayImg" class="img-fluid" alt="text"
+          <img [src]="serverUrl+'/uploads/'+viewInModal?.displayImg" class="img-fluid" alt="text"
             style="width: 100%; height: 100%;">
         </div>
       </div>
