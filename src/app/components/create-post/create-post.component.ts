@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PostService } from '../../core/services/post.service';
 import { BehaviorSubject, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-post',
@@ -14,26 +15,31 @@ export class CreatePostComponent implements OnInit {
 
   postForm!: FormGroup;
   postData = new FormData()
-  isLoading:boolean = false;
-  imageSrc!:any
+  isLoading: boolean = false;
+  imageSrc!: any
   defaultImg = 'defaultImage.png'
   postFromSubmitted = false
 
-  handleImageClick(){
+  handleImageClick() {
     document.getElementById('display')?.click()
-    
+
   }
 
- 
+
 
   constructor(
     private formBuilder: FormBuilder,
-    private postService: PostService
+    private postService: PostService,
+    private router: Router
   ) { }
 
 
 
   ngOnInit(): void {
+    const token = sessionStorage.getItem('token')
+    if (!token?.length) {
+      this.router.navigateByUrl('login')
+    }
     this.postForm = this.formBuilder.group({
       title: [ '', [ Validators.required ] ],
       tags: [ '', [ Validators.required ] ],
@@ -51,7 +57,7 @@ export class CreatePostComponent implements OnInit {
 
       } else {
         this.postData.append('file', file)
-        
+
 
       }
     } else {
@@ -79,18 +85,18 @@ export class CreatePostComponent implements OnInit {
 
     this.isLoading = true
     this.postService.createPost(this.postData).subscribe((res: any) => {
-      
+
       this.postForm.reset()
       this.postData.delete('file')
       this.postData.delete('formData')
       this.imageSrc = ''
       this.isLoading = false
-     
+
       this.postFromSubmitted = true
       setTimeout(() => {
         this.postFromSubmitted = false
 
-      },1500)
+      }, 1500)
     })
 
   }
