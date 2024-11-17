@@ -1,0 +1,48 @@
+<div class="container">
+    <p class="fs-3">Liked Posts</p>
+    <div class="row g-4 bg-dark p-2 m-2 rounded">
+        @if(items?.length){
+
+            @for (item of items; track $index) {
+    
+               
+    
+                <div class="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center p-2">
+                    <div class="img-container">
+                      <img [src]="serverUrl+'/uploads/'+item.displayImg" alt="" class="img-hover rounded">
+                      <div class="overlay d-flex">
+                        <div class="position-absolute top-0 ps-2 text-capitalize">
+                          <img [src]="serverUrl+'/uploads/'+item.userId.profilePic" width="50" height="50" alt=""
+                            style=" border-radius: 100%; object-fit: cover; aspect-ratio: 1;" class="me-2 mt-1">
+                          {{item.userId.username}}
+                        </div>
+                        <div class="position-absolute bottom-0 ps-2 pb-1">
+                          <div>{{item.title}}</div>
+                          <i [ngClass]="item.likes?.includes(userDetails._id)? 'bi bi-heart-fill text-danger me-4':'bi bi-heart me-4'"
+                            (click)="likePost(item._id)"><span class="text-white">
+                              {{item.likes?.length ? item.likes.length:0}}</span></i>
+                          <i class="bi bi-chat" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+                            aria-controls="offcanvasExample" (click)="setItemID(item._id)"> {{item.commentsCount}}</i>
+                        </div>
+                        <div class="position-absolute bottom-0 end-0 pe-2 pb-1">
+                          <i (click)="savePost(item._id)" [ngClass]="userDetails.savedPosts.includes(item._id)? 'bi bi-bookmark-fill':'bi bi-bookmark'"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+    
+            }
+            @if(isLoading){
+            <div class="text-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            }
+        }@else {
+            <p class="text-white text-center">Liked posts will appear here</p>
+        }
+    </div>
+
+    <app-comments (commentsUpdated)="updateComments($event)"></app-comments>
+</div>

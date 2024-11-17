@@ -1,0 +1,103 @@
+<div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasExample"
+  aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Comments</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+
+    <app-comment-form [parentId]="null" (commentText)="addToCommentsList($event)"></app-comment-form>
+
+
+   @if(loading){
+    <div class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+   }@else {
+    @if(commentsList?.length ){
+      @for (comment of commentsList; track $index) {
+  
+      <div class="row pb-2 pt-2" [ngClass]="{'border-bottom': comment._id !== commentsList[commentsList.length-1]._id}">
+        @if (comment.parentId === null) {
+        <div class="col-2 d-flex justify-content-center align-items-center">
+          <img style="border-radius: 100%; object-fit: cover; aspect-ratio: 1; width: 60px;" [src]="serverUrl+'/uploads/'+comment.userId.profilePic"
+             alt="">
+          <!-- <img style="border-radius: 100%; object-fit: cover;" [src]="serverUrl+'/uploads/'+comment.userId.profilePic"
+            width="60" height="60" alt=""> -->
+        </div>
+        <div class="col-10  d-flex justify-content-center align-items-start flex-column position-relative">
+          <p class="text-capitalize" style="font-weight: 600;">{{comment.userId.username}}</p>
+          <p style="line-height: 5px; font-weight: 100; font-size: small;">{{comment.text}}</p>
+          <small class="position-absolute top-0 end-0 text-secondary">{{comment.createdAt | date}}</small>
+          <div class="col-12 d-flex gap-3 text-secondary" style="line-height: 5px;">
+            <span (click)="toggleReplyForm(comment._id)"
+              style="font-size: small; text-decoration: underline; line-height: 5px;">Reply</span>
+  
+            @if (showReplies && commentId === comment._id) {
+  
+            <span style="font-size: small; text-decoration: underline;  line-height: 5px;"
+              (click)="showReplies = false">hide</span>
+  
+            } @else {
+            <span style="font-size: small; text-decoration: underline;  line-height: 5px;"
+              (click)="getReplies(comment._id)">Replies</span>
+            }
+  
+          </div>
+        </div>
+        }
+        @if (showReplyForm && replyParentId === comment._id) {
+        <app-comment-form class="mt-3" [parentId]="replyParentId"
+          (commentText)="addToCommentsList($event)"></app-comment-form>
+        }
+        @if (showReplies && commentId === comment._id) {
+          @if(rloading){
+            <div class="text-center">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          }@else {
+
+            @if (repliesList?.length) {
+              @for (reply of repliesList; track $index) {
+                <div class="d-flex pb-2 pt-2 col-11 offset-1 justify-content-end"
+                  [ngClass]="{'border-bottom': reply._id !== repliesList[repliesList.length-1]._id}">
+                  <div class="col-2 d-flex justify-content-center align-items-center">
+                    <img  style="border-radius: 100%; object-fit: cover; aspect-ratio: 1; width: 50px;" [src]="serverUrl+'/uploads/'+reply.userId.profilePic"
+                     alt="">
+                  </div>
+                  <div class="col-9  d-flex justify-content-center align-items-start flex-column position-relative">
+                    <p class="text-capitalize ps-2" style="font-weight: 600;">{{reply.userId.username}}</p>
+                    <p style="line-height: 3px;  font-weight: 100; font-size: small;" class="ps-2">{{reply.text}}</p>
+                    <small class="position-absolute top-0 end-0 text-secondary">{{reply.createdAt | date}}</small>
+          
+                  </div>
+          
+                </div>
+      
+      
+              }
+            }@else {
+            <p class="mt-3 text-center">Empty</p>
+            }
+          }
+  
+        }
+      </div>
+      }
+  
+      }@else {
+      <p class="mt-3 text-center">Empty</p>
+      }
+   }
+
+
+
+
+
+
+  </div>
+</div>

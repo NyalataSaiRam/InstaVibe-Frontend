@@ -1,0 +1,8 @@
+label {
+    text-transform: capitalize;
+}
+
+img:hover {
+    cursor: pointer;
+    scale: 1.05;
+}

@@ -1,0 +1,87 @@
+<div class="grid text-center mt-3 animate_div">
+    <div class="offset-4 col-4">
+        <form [formGroup]="signupForm" class="form border border-primary p-5 rounded">
+            <h2 style="color: #4B70F5;" class="fs-2 text-center">Sign Up</h2>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" formControlName="username" id="formId1"
+                    placeholder="Username" />
+                <label style="color: black;" for="formId1">Username</label>
+                @if (signupForm.controls['username'].touched && signupForm.controls['username'].errors?.['required']) {
+                <p style="color: red; text-align: start; font-size: 12px;">This field is required</p>
+                }
+                @if (signupForm.controls['username'].touched && signupForm.controls['username'].errors?.['minlength']) {
+                <p style="color: red; text-align: start; font-size: 12px;">Username must be atleast 3 characters long
+                </p>
+                }
+
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" formControlName="email" id="formId2" placeholder="Email" />
+                <label style="color: black;" for="formId2">Email</label>
+                @if (signupForm.controls['email'].touched && signupForm.controls['email'].errors?.['required']) {
+                <p style="color: red; text-align: start; font-size: 12px;">This field is required</p>
+                }
+                @if (!signupForm.controls['email'].errors?.['required'] && signupForm.controls['email'].touched &&
+                signupForm.controls['email'].errors?.['invalidEmail']) {
+                <p style="color: red; text-align: start; font-size: 12px;">
+                    {{signupForm.controls['email'].errors?.['invalidEmail'].message}}
+                </p>
+                }
+
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" formControlName="password" id="formId3"
+                    placeholder="password" />
+                <label style="color: black;" for="formId3">Password</label>
+                @if (signupForm.controls['password'].touched && signupForm.controls['password'].errors?.['required']) {
+                <p style="color: red; text-align: start; font-size: 12px;">This field is required</p>
+                }
+                @if (!signupForm.controls['password'].errors?.['required'] && signupForm.controls['password'].touched &&
+                signupForm.controls['password'].errors?.['minlength']) {
+                <p style="color: red; text-align: start; font-size: 12px;">
+                    Password should be atleast 8 characters long
+                </p>
+                }
+
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" formControlName="confirmPassword" id="formId4"
+                    placeholder="password" />
+                <label style="color: black;" for="formId4">Confirm Password</label>
+                @if (signupForm.controls['confirmPassword'].touched &&
+                signupForm.controls['confirmPassword'].errors?.['required']) {
+                <p style="color: red; text-align: start; font-size: 12px;">This field is required</p>
+                }
+                @if (!signupForm.controls['confirmPassword'].errors?.['required'] &&
+                signupForm.controls['confirmPassword'].touched &&
+                signupForm.controls['confirmPassword'].errors?.['minlength']) {
+                <p style="color: red; text-align: start; font-size: 12px;">
+                    Password should be atleast 8 characters long
+                </p>
+                }
+                @if (!signupForm.controls['confirmPassword'].errors?.['required'] &&
+                signupForm.controls['confirmPassword'].touched &&
+                signupForm.errors?.['invalidPassword']) {
+                <p style="color: red; text-align: start; font-size: 12px;">
+                    Passwords do not match
+                </p>
+                }
+            </div>
+            <div class="mt-3" style="font-size: small;">
+                <p style="line-height: 3px;">Already have an account?<a routerLink="/login"
+                        style="text-decoration: none;"> Sign in</a></p>
+
+            </div>
+            <button (click)="signup()" [disabled]="signupForm.invalid" class="btn" style="background-color: #4B70F5; color: white;">Create
+                Account</button>
+
+                @if(success){
+                    <p class="mt-2">
+                        <small class="text-success" style="line-height: 5px;">Account created successfully.<br/>Please login
+                        </small>
+                    </p>
+                    
+                }
+        </form>
+    </div>
+</div>

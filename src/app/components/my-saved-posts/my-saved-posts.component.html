@@ -1,0 +1,68 @@
+<div class="container">
+
+
+  <p class="fs-3">Saved Posts</p>
+  <div class="row g-4 p-2 m-2 rounded">
+    @if(!items?.length){
+    <p class="text-center fs-2">Posts you save will appear here</p>
+    }@else {
+
+    @for (item of items; track $index) {
+    <div class="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center p-2">
+      <div class="img-container">
+        <img [src]="serverUrl+'/uploads/'+item.displayImg" alt="" class="img-hover rounded">
+        <div class="overlay d-flex">
+          <div class="position-absolute top-0 ps-2 text-capitalize">
+            <img [src]="serverUrl+'/uploads/'+item.userId.profilePic" width="50" height="50" alt=""
+              style=" border-radius: 100%; object-fit: cover; aspect-ratio: 1;" class="me-2 mt-1">
+            {{item.userId.username}}
+          </div>
+          <div class="position-absolute bottom-0 ps-2 pb-1">
+            <div>{{item.title}}</div>
+            <i [ngClass]="item.likes?.includes(userDetails._id)? 'bi bi-heart-fill text-danger me-4':'bi bi-heart me-4'"
+              (click)="likePost(item._id)"><span class="text-white">
+                {{item.likes?.length ? item.likes.length:0}}</span></i>
+            <i class="bi bi-chat" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+              aria-controls="offcanvasExample" (click)="setItemID(item._id)"> {{item.commentsCount}}</i>
+          </div>
+          <div class="position-absolute bottom-0 end-0 pe-2 pb-1">
+            <i title="preview" (click)="viewInModal =item" class="bi bi-eye me-3" data-bs-toggle="modal"
+              data-bs-target="#exampleModal"></i>
+            <i (click)="savePost(item._id)"
+              [ngClass]="userDetails.savedPosts.includes(item._id)? 'bi bi-bookmark-fill':'bi bi-bookmark'"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    }
+    }
+
+    @if(isLoading){
+    <div class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    }
+  </div>
+
+  <app-comments (commentsUpdated)="updateComments($event)"></app-comments>
+
+  <div class="modal  fade modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog ">
+      <div class="modal-content bg-dark">
+        <div class="modal-header d-flex justify-content-between">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">{{viewInModal?.title}}</h1>
+          <i type="button text-white" class=" bi bi-x-lg" data-bs-dismiss="modal" aria-label="Close"></i>
+        </div>
+        <div class="modal-body">
+          <img [src]="'http://localhost:5000/uploads/'+ viewInModal?.displayImg" class="img-fluid" alt="text"
+            style="width: 100%; height: 100%;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

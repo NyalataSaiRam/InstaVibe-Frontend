@@ -1,1 +1,64 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  color: white;
+}
+
+.animate_div {
+  animation: divAnimation 1s ease-in-out;
+}
+
+@keyframes divAnimation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+i {
+  transition: color .3s ease-in-out;
+}
+
+i:hover {
+  color: #4B70F5;
+cursor: pointer;
+}
+
+
+
+/* For WebKit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f14f;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4b70f5a3;
+  border: 1px solid #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #4B70F5;
+}
+
+/* For Firefox */
+/* html {
+    scrollbar-width: thin;
+    scrollbar-color: #4B70F5 #4b70f55e;
+    
+  } */

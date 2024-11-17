@@ -1,0 +1,14 @@
+.active {
+    color: #4B70F5;
+
+}
+
+.applyBorder {
+    background-color: #4b70f54c;
+    border-bottom: 1px solid #4B70F5;
+    transition: all .4s ease-in-out;
+}
+
+#followersBtn:hover, #followingBtn:hover{
+cursor: pointer;
+}

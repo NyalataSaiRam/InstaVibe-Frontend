@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="row g-4 bg-dark p-2 m-2 rounded">
+    <p class="fs-3 ms-3">Latest Posts</p>
+    @for (item of items; track $index) {
+    <div class="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center p-2">
+      <div class="img-container">
+        <img [src]="serverUrl+'/uploads/'+item.displayImg" alt="" class="img-hover rounded">
+        <div class="overlay d-flex">
+          <div class="position-absolute top-0 ps-2 text-capitalize">
+            <a id="profileblock" [routerLink]="['/viewProfile/'+item.userId._id]"
+              style="display: inline-block; text-decoration: none; color: inherit;">
+              <img [src]="serverUrl+'/uploads/'+item.userId.profilePic" width="50" height="50" alt=""
+                style=" border-radius: 100%; object-fit: cover; aspect-ratio: 1;" class="me-2 mt-1">
+              {{item.userId.username}}
+            </a>
+          </div>
+          <div class="position-absolute bottom-0 ps-2 pb-1">
+            <div>{{item.title}}</div>
+            <i [ngClass]="item.likes?.includes(userDetails._id)? 'bi bi-heart-fill text-danger me-4':'bi bi-heart me-4'"
+              (click)="likePost(item._id)"><span class="text-white">
+                {{item.likes?.length ? item.likes.length:0}}</span></i>
+            <i class="bi bi-chat" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+              aria-controls="offcanvasExample" (click)="setItemID(item._id)"> {{item.commentsCount}}</i>
+          </div>
+          <div class="position-absolute bottom-0 end-0 pe-2 pb-1">
+            <i (click)="savePost(item._id)"
+              [ngClass]="userDetails.savedPosts.includes(item._id)? 'bi bi-bookmark-fill':'bi bi-bookmark'"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+    @if(isLoading){
+    <div class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    }@else{
+    <p class="p-4 align-text-center text-start" (click)="loadMore()"><span id="loadmore" class="changeColor p-2 ">load
+        more</span></p>
+    }
+  </div>
+  <div class="row g-4 bg-dark p-2 m-2 rounded">
+    <p class="fs-3 ms-3">Posts from persons you follow</p>
+    @for (item of recentPostsFromFollowing; track $index) {
+    <div class="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center p-2">
+      <div class="img-container">
+        <img [src]="serverUrl+'/uploads/'+item.displayImg" alt="" class="img-hover rounded">
+        <div class="overlay d-flex">
+          <div class="position-absolute top-0 ps-2 text-capitalize">
+            <a id="profileblock" [routerLink]="['/viewProfile/'+item.userId]"
+              style="display: inline-block; text-decoration: none; color: inherit;">
+              <img [src]="serverUrl+'/uploads/'+item.profilePic" width="50" height="50" alt=""
+                style=" border-radius: 100%; object-fit: cover; aspect-ratio: 1;" class="me-2 mt-1">
+              {{item.username}}
+            </a>
+          </div>
+          <div class="position-absolute bottom-0 ps-2 pb-1">
+            <div>{{item.title}}</div>
+            <i [ngClass]="item.likes?.includes(userDetails._id)? 'bi bi-heart-fill text-danger me-4':'bi bi-heart me-4'"
+              (click)="likePost(item._id)"><span class="text-white">
+                {{item.likes?.length ? item.likes.length:0}}</span></i>
+            <i class="bi bi-chat" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+              aria-controls="offcanvasExample" (click)="setItemID(item._id)"> {{item.commentsCount}}</i>
+          </div>
+          <div class="position-absolute bottom-0 end-0 pe-2 pb-1">
+            <i (click)="savePost(item._id)"
+              [ngClass]="userDetails.savedPosts.includes(item._id)? 'bi bi-bookmark-fill':'bi bi-bookmark'"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+    @if(isLoading){
+    <div class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    }
+  </div>
+
+  <app-comments (commentsUpdated)="updateComments($event)"></app-comments>
+</div>

@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6 p-2">
+            @if(!postFromSubmitted){
+                <form [formGroup]="postForm" (ngSubmit)="createPost()" class="form">
+                    <div class="form-group">
+                        <label for="title" class="form-label">title</label>
+                        <input id="title" formControlName="title" name="title" type="text" class="form-control">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="display" class="form-label">upload image</label>
+                        <p class="text-center">
+    
+                            <img (click)="handleImageClick()" [src]="imageSrc || defaultImg" alt="image" class="img-fluid rounded" width="400" height="400">
+                        </p>
+                        <!-- @if(postData.get('file')){
+                        } -->
+                        <input  (change)="handleFileChange($event)" id="display" name="display" type="file" class="form-control" required style="display: none;">
+                        <small class="text-secondary">File size should be less than 1MB</small>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="tags" class="form-label">tags</label>
+                        <input formControlName="tags" id="tags" name="tags" type="text" class="form-control">
+                        <small class="text-secondary">You can enter multiple tags, give space between tags</small>
+                    </div>
+
+                    @if(isLoading){
+                        <div class="text-center">
+                            <div class="spinner-border" role="status">
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                          </div>
+                    }@else {
+
+                        <button type="submit" [disabled]="postForm.invalid" class="btn btn-outline-primary mt-3">Submit</button>
+                    }
+                   
+                </form>
+            }@else {
+                <p class="text-center">
+
+                    <i class="bi bi-check2-circle animate_div mt-5" style="font-size: 50px; color: rgb(51, 173, 51);"> Success</i>
+                </p>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+.img-container {
+  position: relative;
+}
+
+.img-hover {
+  transition: all 0.3s;
+  width: 350px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.img-container:hover .img-hover {
+  opacity: 0.5;
+  scale: 1.1;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.img-container:hover .overlay {
+  opacity: 1;
+}
+
+.changeColor {
+  transition: all .4s ease-in-out;
+}
+
+#loadmore:hover {
+  border-bottom: 2px solid blue;
+  background-color: rgba(128, 128, 128, 0.265);
+  border-radius: 5px 5px 0 0;
+}
+
+#loadmore {
+  border-bottom: 2px solid white;
+}
+
+
+.changeColor:hover {
+  cursor: pointer;
+  color: blue;
+}
+
+
+#profileblock:hover{
+  cursor: pointer;
+}
